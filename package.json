@@ -1,0 +1,25 @@
+{
+  "name": "brainfuck-visualiser",
+  "version": "1.0.0",
+  "description": "Visualising simple brainfuck instructions",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mothugget/brainfuck-visualiser.git"
+  },
+  "keywords": [
+    "brainfuck",
+    "esolang",
+    "visualisation",
+    "react"
+  ],
+  "author": "Karl Fredriksson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mothugget/brainfuck-visualiser/issues"
+  },
+  "homepage": "https://github.com/mothugget/brainfuck-visualiser#readme"
+}
