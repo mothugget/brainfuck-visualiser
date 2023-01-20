@@ -13,8 +13,8 @@ function App() {
   const [loopStart, setLoopStart] = useState(0);
   const [output, setOutput] = useState(undefined)
 
-  const instructions = (">++.").split('');
-  let pointerVal = cells[pointerPos];
+  const instructions = (">++[<++>-].").split('');
+  let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
   let insVal = instructions[insPos];
 
   function updateCells(value) {
@@ -23,7 +23,6 @@ function App() {
         resArr[pointerPos]=0;
       return resArr
     }
-    console.log(pointerVal)
     resArr[pointerPos] = pointerVal+value;
     return resArr;
   }
@@ -46,7 +45,8 @@ function App() {
         setLoopStart(insPos);
         break;
       case ']':
-        setInsPos(loopStart);
+        console.log(pointerVal)
+        (pointerVal>0)&&setInsPos(loopStart);
         break;
       default:
         console.log('no such ins')
@@ -55,14 +55,16 @@ function App() {
   }
 
   function populateCell() {
-    setCells(updateCells())
+    (cells[pointerPos] === undefined) && setCells(updateCells())
   }
 
   function step() {
     populateCell();
     (insVal === '.')&&setOutput(pointerVal);
     if (output === undefined) {
+      console.log(insVal)
       translator(insVal);
+      console.log(insPos)
       setInsPos(insPos + 1);
       setProgramState(programState + 1);
     }
@@ -74,7 +76,8 @@ function App() {
       {insVal} <br />
       {insPos} <br />
       {cells}<br />
-      <button onClick={step} >Step</button>
+      <button onClick={step} >Step</button><br />
+      {output}
     </div>
   );
 }
