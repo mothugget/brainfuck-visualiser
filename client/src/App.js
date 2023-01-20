@@ -9,21 +9,23 @@ function App() {
   const [programState, setProgramState] = useState(0);
   const [pointerPos, setPointerPos] = useState(0);
   const [cells, setCells] = useState([])
-  const [insPos, setInsPos] = useState(0);
+  const [instructionPos, setInstructionPos] = useState(0);
   const [loopStart, setLoopStart] = useState(0);
   const [output, setOutput] = useState(undefined)
 
-  const instructions = (">++[<++>-].").split('');
+  const instructions = (">++++++++[<+++++++++>-]<.").split('');
+
+  let loopFlag = false;
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
-  let insVal = instructions[insPos];
+  let insVal = instructions[instructionPos];
 
   function updateCells(value) {
     const resArr = [...cells];
-    if(value===undefined) {
-        resArr[pointerPos]=0;
+    if (value === undefined) {
+      resArr[pointerPos] = 0;
       return resArr
     }
-    resArr[pointerPos] = pointerVal+value;
+    resArr[pointerPos] = pointerVal + value;
     return resArr;
   }
 
@@ -42,11 +44,10 @@ function App() {
         setPointerPos(pointerPos - 1);
         break;
       case '[':
-        setLoopStart(insPos);
+        setLoopStart(instructionPos);
         break;
       case ']':
-        console.log(pointerVal)
-        (pointerVal>0)&&setInsPos(loopStart);
+        (pointerVal > 0) && (loopFlag = true);
         break;
       default:
         console.log('no such ins')
@@ -60,21 +61,33 @@ function App() {
 
   function step() {
     populateCell();
-    (insVal === '.')&&setOutput(pointerVal);
+    (insVal === '.') && setOutput(pointerVal);
     if (output === undefined) {
       console.log(insVal)
       translator(insVal);
-      console.log(insPos)
-      setInsPos(insPos + 1);
+      loopFlag ? setInstructionPos(loopStart) : setInstructionPos(instructionPos + 1);
       setProgramState(programState + 1);
     }
   }
 
+  // function jump() {
+  //   populateCell();
+  //   while (insVal === '+' && instructions[instructionPos + 1]){}
+  //     (insVal === '.') && setOutput(pointerVal);
+  //   if (output === undefined) {
+  //     console.log(insVal)
+  //     translator(insVal);
+  //     loopFlag ? setInstructionPos(loopStart) : setInstructionPos(instructionPos + 1);
+  //     setProgramState(programState + 1);
+  //   }
+  // }
+
   return (
     <div className="App">
+      {instructions} <br />
       {programState} <br />
       {insVal} <br />
-      {insPos} <br />
+      {instructionPos} <br />
       {cells}<br />
       <button onClick={step} >Step</button><br />
       {output}
