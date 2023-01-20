@@ -17,15 +17,24 @@ function App() {
   let pointerVal = cells[pointerPos];
   let insVal = instructions[insPos];
 
+  function updateCells(value) {
+    const resArr = [...cells];
+    if(value===undefined) {
+        resArr[pointerPos]=0;
+      return resArr
+    }
+    console.log(pointerVal)
+    resArr[pointerPos] = pointerVal+value;
+    return resArr;
+  }
 
   function translator(ins) {
-    console.log(ins)
     switch (ins) {
       case '+':
-        setCells(cells[pointerPos]+1);
+        setCells(updateCells(1));
         break;
       case '-':
-        setCells([...cells][pointerPos] - 1)
+        setCells(updateCells(-1))
         break;
       case '>':
         setPointerPos(pointerPos + 1);
@@ -46,7 +55,7 @@ function App() {
   }
 
   function populateCell() {
-    (cells[pointerPos] === undefined) && setCells;
+    setCells(updateCells())
   }
 
   function step() {
@@ -55,7 +64,6 @@ function App() {
     if (output === undefined) {
       translator(insVal);
       setInsPos(insPos + 1);
-      console.log(insPos);
       setProgramState(programState + 1);
     }
   }
