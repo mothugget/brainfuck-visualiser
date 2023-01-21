@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import './App.css';
 import InstructionList from './components/InstructionList';
-
+import InstructionPointerList from './components/InstructionPointerList';
 
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
   const [loopStart, setLoopStart] = useState(0);
   const [output, setOutput] = useState(undefined)
 
-  const instructions = (">++++++++[<+++++++++>-]<.").split('');
+  const instructions = (">+++[<+++++++++++++++>-]<.").split('');
 
   let loopFlag = false;
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
@@ -82,10 +82,40 @@ function App() {
   //   }
   // }
 
+  const keyedList = [];
+
+  for (let i = 0; i < instructions.length; i++) {
+    keyedList.push({
+      key: i,
+      instruction: instructions[i],
+      pointer: (i === instructionPos) ? 'instruction-pointer' : 'empty-pointer'
+    })
+  }
+
+  const keyedCells = [];
+
+
+  for (let i = 0; i < 9; i++) {
+    keyedCells.push({
+      key: i,
+      cell: (cells[i]||0),
+      pointer: (i === pointerPos) ? 'pointer' : 'empty-pointer'
+    });
+
+    (i<6)||keyedCells.unshift({
+      key: -i,
+      cell: 0,
+      pointer: 'empty-pointer'
+    })
+  }
+
+  console.log(keyedCells)
+
   return (
     <div className="App">
       <button onClick={step} >Step</button>
-    <InstructionList instructions={instructions}/>
+      <InstructionPointerList pointers={keyedList} />
+      <InstructionList instructions={keyedList} />
     </div>
   );
 }
