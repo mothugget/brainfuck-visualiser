@@ -1,0 +1,9 @@
+
+
+export default function Instruction(props) {
+    return (
+        <div className='Instruction'>
+            Instruction
+        </div>
+    )
+}

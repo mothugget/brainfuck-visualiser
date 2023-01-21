@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import './App.css';
-
+import InstructionList from './components/InstructionList';
 
 
 
@@ -84,13 +84,8 @@ function App() {
 
   return (
     <div className="App">
-      {instructions} <br />
-      {programState} <br />
-      {insVal} <br />
-      {instructionPos} <br />
-      {cells}<br />
-      <button onClick={step} >Step</button><br />
-      {output}
+      <button onClick={step} >Step</button>
+    <InstructionList instructions={instructions}/>
     </div>
   );
 }
