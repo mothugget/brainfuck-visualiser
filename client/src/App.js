@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import InstructionList from './components/InstructionList';
 import InstructionPointerList from './components/InstructionPointerList';
+import CellList from './components/CellList';
+import CellPointerList from './components/CellPointerList';
+import Output from './components/Output';
 
 
 function App() {
@@ -11,9 +14,11 @@ function App() {
   const [cells, setCells] = useState([])
   const [instructionPos, setInstructionPos] = useState(0);
   const [loopStart, setLoopStart] = useState(0);
-  const [output, setOutput] = useState(undefined)
+  const [output, setOutput] = useState(undefined);
+  const [finished, setFinished] = useState(false);
+  const [greyOut, setGreyOut] = useState('none');
 
-  const instructions = (">+++[<+++++++++++++++>-]<.").split('');
+  const instructions = (">++[<++>-]<.").split('');
 
   let loopFlag = false;
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
@@ -61,8 +66,13 @@ function App() {
 
   function step() {
     populateCell();
-    (insVal === '.') && setOutput(pointerVal);
-    if (output === undefined) {
+    if (!finished) {
+      if (insVal === '.') {
+        setFinished(true);
+        setOutput(pointerVal);
+        setGreyOut('greyed-out')
+      }
+
       console.log(insVal)
       translator(insVal);
       loopFlag ? setInstructionPos(loopStart) : setInstructionPos(instructionPos + 1);
@@ -98,11 +108,11 @@ function App() {
   for (let i = 0; i < 9; i++) {
     keyedCells.push({
       key: i,
-      cell: (cells[i]||0),
-      pointer: (i === pointerPos) ? 'pointer' : 'empty-pointer'
+      cell: (cells[i] || 0),
+      pointer: (i === pointerPos) ? 'cell-pointer' : 'empty-pointer'
     });
 
-    (i<6)||keyedCells.unshift({
+    (i < 6) || keyedCells.unshift({
       key: -i,
       cell: 0,
       pointer: 'empty-pointer'
@@ -113,9 +123,16 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={step} >Step</button>
-      <InstructionPointerList pointers={keyedList} />
-      <InstructionList instructions={keyedList} />
+      <div className={'centerer ' + greyOut}>
+        <button onClick={step} >Step</button>
+        <InstructionPointerList pointers={keyedList} />
+        <InstructionList instructions={keyedList} />
+        <div className='spacer' />
+        <CellPointerList pointers={keyedCells} />
+        <CellList cells={keyedCells} />
+      </div>
+      <div className='spacer' />
+      <Output output={output}/>
     </div>
   );
 }
