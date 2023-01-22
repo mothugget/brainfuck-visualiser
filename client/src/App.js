@@ -9,7 +9,7 @@ import OutputList from './components/OutputList';
 
 let pointerPos = 0;
 let instructionPos = 0;
-let loopStart = 0;
+let loopStart = [];
 let finished = false;
 let greyOut =  'none';
 
@@ -21,7 +21,7 @@ function App() {
   const [programState, setProgramState] = useState(0);
   const [running, setRunning] = useState(false);
 
-  const instructions = (">+[<+>-]<.....").split('');
+  const instructions = (">++[<++>-]<.....").split('');
 
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
   let insVal = instructions[instructionPos];
@@ -42,10 +42,10 @@ function App() {
         pointerPos--;
         break;
       case '[':
-        loopStart=instructionPos;
+        loopStart.push(instructionPos);
         break;
       case ']':
-        (pointerVal > 0) && (instructionPos=loopStart-1);
+        (pointerVal > 0) && (instructionPos=loopStart.pop()-1);
         break;
       case '.':
         output.push(pointerVal);
