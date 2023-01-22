@@ -34,7 +34,6 @@ div{
 
 :root {
   --instruction-dims: 50px;
-  --cell-dims: 100px;
 }
 
 
@@ -47,7 +46,7 @@ div{
 .InstructionPointer {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   width: var(--instruction-dims);
   aspect-ratio: 1 / 1;
   font-size: 40px;
@@ -61,6 +60,10 @@ div{
 .instruction-pointer {
   height: var(--instruction-dims);
   color: red;
+}
+
+.instruction-pointer-img {
+  height: 40px;
 }
 
 .Instruction {
@@ -99,16 +102,16 @@ div{
 
 
 .spacer {
-  height: 70px;
+  height: 40px;
 }
 
 .Cell {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: var(--cell-dims);
+width: var(--instruction-dims);
   aspect-ratio: 1 / 1;
-  font-size: 80px;
+  font-size: 40px;
   border-style: solid;
   border-radius: 4px;
   margin: 2px;
@@ -120,13 +123,16 @@ div{
   height: var(--cell-dims);
 }
 
+.cell-pointer-img {
+height: 40px;
+}
+
 .Pointer {
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: var(--cell-dims);
-  aspect-ratio: 1 / 1;
-  font-size: 40px;
+  align-items: flex-end;
+  width: var(--instruction-dims);
+  height: 40px;
   border-style: solid;
   border-color: rgba(255, 255, 255, 0);
   border-radius: 4px;
@@ -145,9 +151,9 @@ div{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 200px;
+  width: 50px;
   aspect-ratio: 1 / 1;
-  font-size: 100px;
+  font-size: 40px;
   border-style: solid;
   border-color: rgb(0, 0, 0);
   border-radius: 9px;

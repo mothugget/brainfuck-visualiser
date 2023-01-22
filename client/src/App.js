@@ -5,77 +5,68 @@ import InstructionList from './components/InstructionList';
 import InstructionPointerList from './components/InstructionPointerList';
 import CellList from './components/CellList';
 import CellPointerList from './components/CellPointerList';
-import Output from './components/Output';
+import OutputList from './components/OutputList';
+
+let pointerPos = 0;
+let instructionPos = 0;
+let loopStart = 0;
+
+const cells = {};
+const output =[];
 
 
 function App() {
   const [programState, setProgramState] = useState(0);
-  const [pointerPos, setPointerPos] = useState(0);
-  const [cells, setCells] = useState([])
-  const [instructionPos, setInstructionPos] = useState(0);
-  const [loopStart, setLoopStart] = useState(0);
-  const [output, setOutput] = useState(undefined);
+
+ 
   const [finished, setFinished] = useState(false);
   const [greyOut, setGreyOut] = useState('none');
   const [running, setRunning] = useState(false);
 
-  const instructions = (">+++[<+++>-]<.").split('');
+  const instructions = (">+[<+>-]<.....").split('');
 
   let loopFlag = false;
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
   let insVal = instructions[instructionPos];
 
-  function updateCells(value) {
-    const resArr = [...cells];
-    if (value === undefined) {
-      resArr[pointerPos] = 0;
-      return resArr
-    }
-    resArr[pointerPos] = pointerVal + value;
-    return resArr;
-  }
 
   function translator(ins) {
     switch (ins) {
       case '+':
-        setCells(updateCells(1));
+        cells[pointerPos]++;
         break;
       case '-':
-        setCells(updateCells(-1))
+        cells[pointerPos]--;
         break;
       case '>':
-        setPointerPos(pointerPos + 1);
+        pointerPos++;
         break;
       case '<':
-        setPointerPos(pointerPos - 1);
+        pointerPos--;
         break;
       case '[':
-        setLoopStart(instructionPos);
+        loopStart=instructionPos;
         break;
       case ']':
-        (pointerVal > 0) && (loopFlag = true);
+        (pointerVal > 0) && (instructionPos=loopStart-1);
+        break;
+      case '.':
+        output.push(pointerVal);
         break;
       default:
         console.log('end of program')
+        setFinished(true);
+        setGreyOut('greyed-out')
         break;
     }
   }
 
-  function populateCell() {
-    (cells[pointerPos] === undefined) && setCells(updateCells())
-  }
 
   function step() {
-    console.log(programState+' '+insVal)
-    populateCell();
+    (cells[pointerPos] === undefined) && (cells[pointerPos] = 0);
     if (!finished) {
-      if (insVal === '.') {
-        setFinished(true);
-        setOutput(pointerVal);
-        setGreyOut('greyed-out')
-      }
       translator(insVal);
-      loopFlag ? setInstructionPos(loopStart) : setInstructionPos(instructionPos + 1);
+      instructionPos++;
       setProgramState(programState + 1);
     }
   }
@@ -85,16 +76,16 @@ function App() {
     console.log("It's alive!")
   }
 
-  function reload(){
+  function reload() {
     window.location.reload();
   }
 
   useEffect(() => {
-    if (!finished&&running) {
+    if (!finished && running) {
       const alive = setInterval(step, 200);
       return () => clearInterval(alive);
     }
-  }, [running,finished,instructionPos]);
+  }, [running, finished, programState]);
 
   const keyedList = [];
 
@@ -112,17 +103,20 @@ function App() {
   const keyedCells = [];
 
 
-  for (let i = 0; i < 15; i++) {
+  for (let i = -15; i < 15; i++) {
     keyedCells.push({
       key: i,
       cell: (cells[i] || 0),
       pointer: (i === pointerPos) ? 'cell-pointer' : 'empty-pointer'
     });
+  }
 
-    (i < 6) || keyedCells.unshift({
-      key: -i,
-      cell: 0,
-      pointer: 'empty-pointer'
+const keyedOutput = [];
+
+  for (let i = 0; i < output.length; i++) {
+    keyedOutput.push({
+      key: i,
+      output: output[i]
     })
   }
 
@@ -139,7 +133,8 @@ function App() {
         <div>Cells</div>
       </div>
       <div className='spacer' />
-      <Output output={output} />
+      <div>Output</div>
+      <OutputList output={keyedOutput} />
       <div className='button-container'>
         <button onClick={step} >Step</button>
         <button onClick={run} >Run</button>
