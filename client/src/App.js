@@ -85,6 +85,10 @@ function App() {
     console.log("It's alive!")
   }
 
+  function reload(){
+    window.location.reload();
+  }
+
   useEffect(() => {
     if (!finished&&running) {
       const alive = setInterval(step, 200);
@@ -139,6 +143,7 @@ function App() {
       <div className='button-container'>
         <button onClick={step} >Step</button>
         <button onClick={run} >Run</button>
+        <button onClick={reload} >Reload</button>
       </div>
     </div>
   );
