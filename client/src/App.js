@@ -10,6 +10,8 @@ import OutputList from './components/OutputList';
 let pointerPos = 0;
 let instructionPos = 0;
 let loopStart = 0;
+let finished = false;
+let greyOut =  'none';
 
 const cells = {};
 const output =[];
@@ -17,15 +19,10 @@ const output =[];
 
 function App() {
   const [programState, setProgramState] = useState(0);
-
- 
-  const [finished, setFinished] = useState(false);
-  const [greyOut, setGreyOut] = useState('none');
   const [running, setRunning] = useState(false);
 
   const instructions = (">+[<+>-]<.....").split('');
 
-  let loopFlag = false;
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
   let insVal = instructions[instructionPos];
 
@@ -55,8 +52,8 @@ function App() {
         break;
       default:
         console.log('end of program')
-        setFinished(true);
-        setGreyOut('greyed-out')
+        finished = true;
+        greyOut = 'greyed-out';
         break;
     }
   }
