@@ -7,6 +7,20 @@
   flex-shrink: 0;
 }
 
+    @keyframes all {
+      from {
+        background-color: red;
+      }
+  
+      to {
+        background-color: yellow;
+      }
+    }
+
+div{
+  animation-name: all;
+}
+
 .centerer {
   display: flex;
   flex-direction: column;
