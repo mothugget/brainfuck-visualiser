@@ -2,19 +2,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  font-size: 30px;
   font-family: 'Courier New', Courier, monospace;
   flex-shrink: 0;
 }
 
-.centerer{
+.centerer {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.greyed-out{
+.greyed-out {
   color: grey;
+  background-color: white;
 }
 
 :root {
@@ -22,9 +23,7 @@
   --cell-dims: 100px;
 }
 
-button {
-  width: 50px
-}
+
 
 .list {
   display: flex;
@@ -63,7 +62,29 @@ button {
   flex-shrink: 0;
 }
 
-.spacer{
+.ran {
+  color: grey;
+}
+
+.ran.start {
+  background-color: black;
+}
+
+.display-end.start,
+.display-end.end {
+  background-color: black;
+  color: grey;
+}
+
+.display-end.start.instruction-pointer,
+.display-end.end.instruction-pointer {
+  background-color: black;
+  color: rgb(255, 0, 0);
+}
+
+
+
+.spacer {
   height: 70px;
 }
 
@@ -80,7 +101,7 @@ button {
   flex-shrink: 0;
 }
 
-.cell-pointer{
+.cell-pointer {
   color: green;
   height: var(--cell-dims);
 }
@@ -97,4 +118,38 @@ button {
   border-radius: 4px;
   margin: 2px;
   flex-shrink: 0;
+}
+
+.Output {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 40px;
+}
+
+.output-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  aspect-ratio: 1 / 1;
+  font-size: 100px;
+  border-style: solid;
+  border-color: rgb(0, 0, 0);
+  border-radius: 9px;
+  margin: 2px;
+}
+
+.button-container{
+  display: flex;
+flex-direction: column;
+  position: fixed;
+  left: 100px;
+  top: 80vh;
+
+}
+
+button {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 40px;
 }

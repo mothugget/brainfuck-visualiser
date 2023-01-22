@@ -1,14 +1,15 @@
 import Pointer from './Pointer'
 
-export default function PointerList(props) {
+export default function CellPointerList(props) {
+    
     return (
-        <div className="PointerList list" >
+        <div className="CellPointerList list" >
             {props.pointers.map(pointer =>
                 <Pointer
-                    keys={pointer.keys}
+                    key={pointer.key}
                     pointer={pointer.pointer}
                 />
-            )}
+)}
         </div>
     )
 }

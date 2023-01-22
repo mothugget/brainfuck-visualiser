@@ -8,8 +8,7 @@ export default function InstructionList(props) {
             {props.instructions.map(instruction =>
                 <Instruction
                     key={instruction.key}
-                    instruction={instruction.instruction}
-                    pointer={instruction.pointer}
+                    ins={instruction}
                 />
             )}
         </div>

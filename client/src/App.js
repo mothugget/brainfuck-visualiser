@@ -17,8 +17,9 @@ function App() {
   const [output, setOutput] = useState(undefined);
   const [finished, setFinished] = useState(false);
   const [greyOut, setGreyOut] = useState('none');
+  const [running, setRunning] = useState(false);
 
-  const instructions = (">++[<++>-]<.").split('');
+  const instructions = (">+++[<+++>-]<.").split('');
 
   let loopFlag = false;
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
@@ -55,7 +56,7 @@ function App() {
         (pointerVal > 0) && (loopFlag = true);
         break;
       default:
-        console.log('no such ins')
+        console.log('end of program')
         break;
     }
   }
@@ -65,6 +66,7 @@ function App() {
   }
 
   function step() {
+    console.log(programState+' '+insVal)
     populateCell();
     if (!finished) {
       if (insVal === '.') {
@@ -72,25 +74,23 @@ function App() {
         setOutput(pointerVal);
         setGreyOut('greyed-out')
       }
-
-      console.log(insVal)
       translator(insVal);
       loopFlag ? setInstructionPos(loopStart) : setInstructionPos(instructionPos + 1);
       setProgramState(programState + 1);
     }
   }
 
-  // function jump() {
-  //   populateCell();
-  //   while (insVal === '+' && instructions[instructionPos + 1]){}
-  //     (insVal === '.') && setOutput(pointerVal);
-  //   if (output === undefined) {
-  //     console.log(insVal)
-  //     translator(insVal);
-  //     loopFlag ? setInstructionPos(loopStart) : setInstructionPos(instructionPos + 1);
-  //     setProgramState(programState + 1);
-  //   }
-  // }
+  function run() {
+    setRunning(running => !running)
+    console.log("It's alive!")
+  }
+
+  useEffect(() => {
+    if (!finished&&running) {
+      const alive = setInterval(step, 200);
+      return () => clearInterval(alive);
+    }
+  }, [running,finished,instructionPos]);
 
   const keyedList = [];
 
@@ -98,14 +98,17 @@ function App() {
     keyedList.push({
       key: i,
       instruction: instructions[i],
-      pointer: (i === instructionPos) ? 'instruction-pointer' : 'empty-pointer'
+      pointer: (i === instructionPos) ? 'instruction-pointer' : 'empty-pointer',
+      run: (i < instructionPos) ? 'ran' : 'not-yet',
+      greyOut: greyOut,
+      endLoop: ((instructionPos < programState) || (instructionPos > i)) ? 'display-end' : 'nah'
     })
   }
 
   const keyedCells = [];
 
 
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < 15; i++) {
     keyedCells.push({
       key: i,
       cell: (cells[i] || 0),
@@ -119,20 +122,24 @@ function App() {
     })
   }
 
-  console.log(keyedCells)
 
   return (
     <div className="App">
       <div className={'centerer ' + greyOut}>
-        <button onClick={step} >Step</button>
         <InstructionPointerList pointers={keyedList} />
         <InstructionList instructions={keyedList} />
+        <div>Instructions</div>
         <div className='spacer' />
         <CellPointerList pointers={keyedCells} />
         <CellList cells={keyedCells} />
+        <div>Cells</div>
       </div>
       <div className='spacer' />
-      <Output output={output}/>
+      <Output output={output} />
+      <div className='button-container'>
+        <button onClick={step} >Step</button>
+        <button onClick={run} >Run</button>
+      </div>
     </div>
   );
 }
