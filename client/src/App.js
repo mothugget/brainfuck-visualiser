@@ -21,7 +21,7 @@ function App() {
   const [programState, setProgramState] = useState(0);
   const [running, setRunning] = useState(false);
 
-  const instructions = (">++[<++>-]<.....").split('');
+  const instructions = (">++[<+[>-]+>-]<.....").split('');
 
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
   let insVal = instructions[instructionPos];
@@ -45,7 +45,7 @@ function App() {
         loopStart.push(instructionPos);
         break;
       case ']':
-        (pointerVal > 0) && (instructionPos=loopStart.pop()-1);
+        (pointerVal > 0) ? (instructionPos=loopStart[loopStart.length-1]-1):loopStart.pop();
         break;
       case '.':
         output.push(pointerVal);
