@@ -3,7 +3,9 @@
 export default function InputModal(props) {
     return (
         <div className='InputModal'>
-            InputModal
+            <form>
+                <input type='text'
+            </form>
         </div>
     )
 }
