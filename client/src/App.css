@@ -36,7 +36,7 @@
   gap: 1px;
   grid-template-columns: repeat(auto-fit, 54px);
   grid-auto-rows: auto;
-padding: 1vw;
+padding: .5vw;
 border-style: solid;
 border-radius: 8px;
 background-color: rgb(224, 224, 224);
@@ -46,7 +46,7 @@ background-color: rgb(224, 224, 224);
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  width: var(--instruction-dims);
+  width: 40px;
   aspect-ratio: 1 / 1;
   font-size: 40px;
   border-style: solid;

@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import InstructionList from './components/InstructionList';
 import CellList from './components/CellList';
-import CellPointerList from './components/CellPointerList';
 import OutputList from './components/OutputList';
 
 let pointerPos = 0;
@@ -125,7 +124,6 @@ function App() {
   
         <div className='spacer' />
         <div>Cells</div>
-        <CellPointerList pointers={keyedCells} />
         <CellList cells={keyedCells} />
         
       </div>

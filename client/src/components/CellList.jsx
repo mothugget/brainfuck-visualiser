@@ -6,8 +6,7 @@ export default function CellList(props) {
             {props.cells.map(cell =>
                 <Cell
                     key={cell.key}
-                    cell={cell.cell}
-                    pointer={cell.pointer}
+                    cell={cell}
                 />
             )}
         </div>
