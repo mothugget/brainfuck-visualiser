@@ -7,8 +7,22 @@
   flex-shrink: 0;
 }
 
+.bg-blur {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+  background-color: rgba(0, 255, 255, 0);
+  backdrop-filter: blur(7px);
+}
+
+.InputModal{
+  position: fixed;
+  
+}
 
 .centerer {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,7 +61,7 @@
   justify-content: center;
   align-items: flex-end;
   width: 40px;
-  aspect-ratio: 1 / 1;
+  height: 20px;
   font-size: 20px;
   border-style: solid;
   border-color: rgba(255, 255, 255, 0);
@@ -62,7 +76,7 @@
 }
 
 .instruction-pointer-img {
-  height: 40px;
+  height: 20px;
 }
 
 .Instruction {
@@ -102,10 +116,11 @@
 
 
 .spacer {
+  position: relative;
   height: 40px;
 }
 
-.cells-container{
+.cells-container {
   width: 100vw;
 }
 
@@ -123,7 +138,7 @@
   overflow: hidden;
 }
 
-.negative{
+.negative {
   background-color: red;
 }
 
@@ -133,7 +148,7 @@
 }
 
 .cell-pointer-img {
-  height: 40px;
+  height: 30px;
 }
 
 .Pointer {
@@ -147,6 +162,14 @@
   border-radius: 4px;
   margin: 2px;
   flex-shrink: 0;
+}
+
+.output-label {
+  position: relative;
+}
+
+.OutputList {
+  position: relative;
 }
 
 .Output {
@@ -170,9 +193,14 @@
   margin: 2px;
 }
 
+output-string {
+  position: relative;
+}
+
 .button-container {
+  position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   position: fixed;
   left: 0px;
   bottom: 0px;

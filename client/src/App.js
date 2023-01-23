@@ -4,6 +4,7 @@ import './App.css';
 import InstructionList from './components/InstructionList';
 import CellList from './components/CellList';
 import OutputList from './components/OutputList';
+import InputModal from './components/InputModal';
 
 let pointerPos = 0;
 let instructionPos = 0;
@@ -17,12 +18,13 @@ let interval = 10
 const cells = {};
 const output = [];
 let instructions
-window.localStorage.instructions = JSON.stringify(('++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.').split(''));
+window.localStorage.instructions = JSON.stringify(('>++++[<++>-]<.').split(''));
 
 
 function App() {
   const [programState, setProgramState] = useState(0);
   const [running, setRunning] = useState(false);
+  const [inputModal, setInputModal] = useState(false)
 
   instructions = JSON.parse(window.localStorage.instructions)
 
@@ -74,20 +76,27 @@ function App() {
   }
 
   function run() {
+    running||console.log('Program running')
     setRunning(running => !running)
-    console.log("It's alive!")
   }
 
   function reload() {
     window.location.reload();
   }
 
+  function input() {
+    running&&run();
+    setInputModal(true)
+  }
+
+
+
   useEffect(() => {
     if (!finished && running) {
       const alive = setInterval(step, interval);
       return () => clearInterval(alive);
     }
-  }, [running, finished, programState]);
+  }, [running, finished, programState, step]);
 
   const keyedList = [];
 
@@ -131,6 +140,12 @@ function App() {
 
   return (
     <div className="App">
+      {inputModal&&
+      <>
+      <button className='bg-blur' onClick={()=> setInputModal(false)}/>
+      <InputModal/>
+      </>
+      }
       <div className={'centerer ' + greyOut}>
         <div>Instructions</div>
         <InstructionList instructions={keyedList} />
@@ -141,13 +156,14 @@ function App() {
         </div>
       </div>
       <div className='spacer' />
-      <div>Output</div>
+      <div className='output-label'>Output</div>
       <OutputList output={keyedOutput} />
-      <div>{outputString}</div>
+      <div className='output-string'>{outputString}</div>
       <div className='button-container'>
         <button onClick={step} >Step</button>
         <button onClick={run} >Run</button>
         <button onClick={reload} >Reload</button>
+        <button onClick={input} >Input</button>
       </div>
     </div>
   );
