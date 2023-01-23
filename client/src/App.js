@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 import './App.css';
 import InstructionList from './components/InstructionList';
-import InstructionPointerList from './components/InstructionPointerList';
 import CellList from './components/CellList';
 import CellPointerList from './components/CellPointerList';
 import OutputList from './components/OutputList';
@@ -11,17 +10,17 @@ let pointerPos = 0;
 let instructionPos = 0;
 let loopStart = [];
 let finished = false;
-let greyOut =  'none';
+let greyOut = 'none';
 
 const cells = {};
-const output =[];
+const output = [];
 
 
 function App() {
   const [programState, setProgramState] = useState(0);
   const [running, setRunning] = useState(false);
 
-  const instructions = (">++[<+[>-]+>-]<.....").split('');
+  const instructions = (">++[<++>-]<.....").split('');
 
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
   let insVal = instructions[instructionPos];
@@ -45,7 +44,7 @@ function App() {
         loopStart.push(instructionPos);
         break;
       case ']':
-        (pointerVal > 0) ? (instructionPos=loopStart[loopStart.length-1]-1):loopStart.pop();
+        (pointerVal > 0) ? (instructionPos = loopStart[loopStart.length - 1] - 1) : loopStart.pop();
         break;
       case '.':
         output.push(pointerVal);
@@ -108,7 +107,7 @@ function App() {
     });
   }
 
-const keyedOutput = [];
+  const keyedOutput = [];
 
   for (let i = 0; i < output.length; i++) {
     keyedOutput.push({
@@ -121,8 +120,7 @@ const keyedOutput = [];
   return (
     <div className="App">
       <div className={'centerer ' + greyOut}>
-        <InstructionPointerList pointers={keyedList} />
-        <InstructionList instructions={keyedList} />
+          <InstructionList instructions={keyedList} />
         <div>Instructions</div>
         <div className='spacer' />
         <CellPointerList pointers={keyedCells} />
