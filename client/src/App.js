@@ -7,9 +7,11 @@ import OutputList from './components/OutputList';
 
 let pointerPos = 0;
 let instructionPos = 0;
+let maxIns = 0;
 let loopStart = [];
 let finished = false;
 let greyOut = 'none';
+let outputString = '';
 
 const cells = {};
 const output = [];
@@ -19,7 +21,7 @@ function App() {
   const [programState, setProgramState] = useState(0);
   const [running, setRunning] = useState(false);
 
-  const instructions = (">++[<++>-]<<><><><><><><>.....").split('');
+  const instructions = ('++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.').split('');
 
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
   let insVal = instructions[instructionPos];
@@ -40,13 +42,14 @@ function App() {
         pointerPos--;
         break;
       case '[':
-        loopStart.push(instructionPos);
+        (loopStart[loopStart.length - 1]!==instructionPos)&&loopStart.push(instructionPos);
         break;
       case ']':
-        (pointerVal > 0) ? (instructionPos = loopStart[loopStart.length - 1] - 1) : loopStart.pop();
+        (pointerVal > 0) ? (instructionPos = loopStart[loopStart.length - 1]-1) : loopStart.pop();
         break;
       case '.':
         output.push(pointerVal);
+        outputString+=String.fromCharCode(pointerVal)
         break;
       default:
         console.log('end of program')
@@ -62,6 +65,7 @@ function App() {
     if (!finished) {
       translator(insVal);
       instructionPos++;
+      (instructionPos>maxIns)&&(maxIns=instructionPos);
       setProgramState(programState + 1);
     }
   }
@@ -77,7 +81,7 @@ function App() {
 
   useEffect(() => {
     if (!finished && running) {
-      const alive = setInterval(step, 200);
+      const alive = setInterval(step, 10);
       return () => clearInterval(alive);
     }
   }, [running, finished, programState]);
@@ -91,7 +95,7 @@ function App() {
       pointer: (i === instructionPos) ? 'instruction-pointer' : 'empty-pointer',
       run: (i < instructionPos) ? 'ran' : 'not-yet',
       greyOut: greyOut,
-      endLoop: ((instructionPos < programState) || (instructionPos > i)) ? 'display-end' : 'nah'
+      endLoop: ((i <= maxIns) || (instructionPos > i)) ? 'display-end' : 'nah'
     })
   }
 
@@ -130,6 +134,7 @@ function App() {
       <div className='spacer' />
       <div>Output</div>
       <OutputList output={keyedOutput} />
+      <div>{outputString}</div>
       <div className='button-container'>
         <button onClick={step} >Step</button>
         <button onClick={run} >Run</button>
