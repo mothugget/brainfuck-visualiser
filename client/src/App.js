@@ -12,11 +12,12 @@ let loopStart = [];
 let finished = false;
 let greyOut = 'none';
 let outputString = '';
+let interval = 10
 
 const cells = {};
 const output = [];
 let instructions
-window.localStorage.instructions = JSON.stringify(('<+>').split(''));
+window.localStorage.instructions = JSON.stringify(('++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.').split(''));
 
 
 function App() {
@@ -83,7 +84,7 @@ function App() {
 
   useEffect(() => {
     if (!finished && running) {
-      const alive = setInterval(step, 500);
+      const alive = setInterval(step, interval);
       return () => clearInterval(alive);
     }
   }, [running, finished, programState]);
@@ -102,6 +103,7 @@ function App() {
   }
 
   const keyedCells = [];
+  
   let maxCell = Math.max.apply(Math, Object.keys(cells));
   (maxCell===-Infinity)&&(maxCell=0)
 

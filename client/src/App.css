@@ -115,7 +115,7 @@
   align-items: center;
   width: var(--instruction-dims);
   aspect-ratio: 1 / 1;
-  font-size: 50px;
+  font-size: 20px;
   border-style: solid;
   border-radius: 4px;
   margin: 2px;
