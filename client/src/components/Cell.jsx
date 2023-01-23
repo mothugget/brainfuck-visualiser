@@ -6,7 +6,7 @@ export default function Cell(props) {
             <div className='Pointer'>
                 {(props.cell.pointer === 'cell-pointer') && <img className='cell-pointer-img' src={pointerArrow} alt='pointer' />}
             </div>
-            <div className={'Cell ' + props.cell.pointer}>
+            <div className={`Cell ${props.cell.pointer} ${props.cell.sign}`}>
                 {props.cell.cell}
             </div>
         </div>
