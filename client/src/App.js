@@ -20,7 +20,7 @@ function App() {
   const [programState, setProgramState] = useState(0);
   const [running, setRunning] = useState(false);
 
-  const instructions = (">++[<++>-]<.....").split('');
+  const instructions = (">++[<++>-]<<><><><><><><>.....").split('');
 
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
   let insVal = instructions[instructionPos];
@@ -120,12 +120,14 @@ function App() {
   return (
     <div className="App">
       <div className={'centerer ' + greyOut}>
-          <InstructionList instructions={keyedList} />
         <div>Instructions</div>
+          <InstructionList instructions={keyedList} />
+  
         <div className='spacer' />
+        <div>Cells</div>
         <CellPointerList pointers={keyedCells} />
         <CellList cells={keyedCells} />
-        <div>Cells</div>
+        
       </div>
       <div className='spacer' />
       <div>Output</div>

@@ -30,7 +30,17 @@
   flex-direction: row;
 }
 
-
+.InstructionList {
+  width: 95vw;
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(auto-fit, 54px);
+  grid-auto-rows: auto;
+padding: 1vw;
+border-style: solid;
+border-radius: 8px;
+background-color: rgb(224, 224, 224);
+}
 
 .InstructionPointer {
   display: flex;
@@ -62,6 +72,7 @@
   width: var(--instruction-dims);
   aspect-ratio: 1 / 1;
   font-size: 40px;
+  background-color: white;
   border-style: solid;
   border-radius: 4px;
   margin: 2px;
@@ -98,7 +109,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-width: var(--instruction-dims);
+  width: var(--instruction-dims);
   aspect-ratio: 1 / 1;
   font-size: 40px;
   border-style: solid;
@@ -113,7 +124,7 @@ width: var(--instruction-dims);
 }
 
 .cell-pointer-img {
-height: 40px;
+  height: 40px;
 }
 
 .Pointer {
@@ -149,9 +160,9 @@ height: 40px;
   margin: 2px;
 }
 
-.button-container{
+.button-container {
   display: flex;
-flex-direction: column;
+  flex-direction: column;
   position: fixed;
   left: 100px;
   top: 75vh;
