@@ -13,17 +13,17 @@ let loopStart = [];
 let finished = false;
 let greyOut = 'none';
 let outputString = '';
-let interval = 50
 let cells = {};
 let output = [];
-let instructions =  ('>++++++++[<+++++++++>-]<.').split('');
+let instructions = JSON.parse(window.localStorage.instructions) || ('>++[<+++>-]<.').split('');
 
-// JSON.parse(window.localStorage.instructions) ||
+
 
 function App() {
   const [programState, setProgramState] = useState(0);
   const [running, setRunning] = useState(false);
   const [inputModal, setInputModal] = useState(false)
+  const [interval, setInterval] = useState(200)
 
  
 
@@ -161,7 +161,7 @@ function App() {
       {inputModal &&
         <>
           <button className='bg-blur' onClick={() => setInputModal(false)} />
-          <InputModal />
+        <InputModal setInputModal={setInputModal} setInterval={setInterval} interval={interval}/>
         </>
       }
       <div className={'centerer ' + greyOut}>
