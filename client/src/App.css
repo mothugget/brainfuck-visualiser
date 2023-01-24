@@ -180,12 +180,18 @@
   flex-shrink: 0;
 }
 
-.output-label {
+h3 {
   position: relative;
+  font-weight: normal;
+  margin:0px
+}
+
+.programstate-string{
 }
 
 .OutputList {
   position: relative;
+  height: 54px;
 }
 
 .Output {
@@ -209,8 +215,10 @@
   margin: 2px;
 }
 
-output-string {
+.output-string {
   position: relative;
+  height: 33px;
+
 }
 
 .button-container {

@@ -16,16 +16,16 @@ let outputString = '';
 let interval = 50
 let cells = {};
 let output = [];
-let instructions
-window.localStorage.instructions = JSON.stringify(('++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.').split(''));
+let instructions =  ('>++++++++[<+++++++++>-]<.').split('');
 
+// JSON.parse(window.localStorage.instructions) ||
 
 function App() {
   const [programState, setProgramState] = useState(0);
   const [running, setRunning] = useState(false);
   const [inputModal, setInputModal] = useState(false)
 
-  instructions = JSON.parse(window.localStorage.instructions)
+ 
 
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
   let insVal = instructions[instructionPos];
@@ -86,7 +86,7 @@ function App() {
     setRunning(running => !running)
   }
 
-  function reload() {
+  function reset() {
     pointerPos = 0;
     instructionPos = 0;
     maxIns = 0;
@@ -173,14 +173,15 @@ function App() {
           <CellList cells={keyedCells} />
         </div>
       </div>
-      <div className='spacer' />
-      <div className='output-label'>Output</div>
+      <h3>Steps</h3>
+      <div className='programstate-string'>{programState}</div>
+      <h3>Output</h3>
       <OutputList output={keyedOutput} />
-      <div className='output-string'>{outputString}</div>
+      <div className='output-string'> {outputString} </div>
       <div className='button-container'>
         <button onClick={step} >Step</button>
         <button onClick={run} >Run</button>
-        <button onClick={reload} >Reload</button>
+        <button onClick={reset} >Reset</button>
         <button onClick={input} >Input</button>
       </div>
     </div>
