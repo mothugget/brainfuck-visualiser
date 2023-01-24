@@ -15,7 +15,10 @@ let greyOut = 'none';
 let outputString = '';
 let cells = {};
 let output = [];
-let instructions = JSON.parse(window.localStorage.instructions) || ('>++[<+++>-]<.').split('');
+
+let instructions
+
+let interval;
 
 
 
@@ -23,9 +26,18 @@ function App() {
   const [programState, setProgramState] = useState(0);
   const [running, setRunning] = useState(false);
   const [inputModal, setInputModal] = useState(false)
-  const [interval, setInterval] = useState(200)
 
- 
+  if (window.localStorage.instructions) {
+    instructions = JSON.parse(window.localStorage.instructions)
+  } else {
+    instructions = ('>++[<+++>-]<.').split('')
+  }
+
+  if (window.localStorage.interval) {
+    interval = JSON.parse(window.localStorage.interval);
+  } else {
+    interval = 100;
+  }
 
   let pointerVal = (cells[pointerPos] === undefined) ? 0 : cells[pointerPos];
   let insVal = instructions[instructionPos];
@@ -81,7 +93,13 @@ function App() {
     }
   }
 
+function stepClick() {
+  running && setRunning(false);
+  step();
+}
+
   function run() {
+    finished && reset();
     running || console.log('Program running')
     setRunning(running => !running)
   }
@@ -94,7 +112,6 @@ function App() {
     finished = false;
     greyOut = 'none';
     outputString = '';
-    interval = 50
     cells = {};
     output = [];
     setProgramState(0);
@@ -103,7 +120,7 @@ function App() {
   }
 
   function input() {
-    running && run();
+    running && setRunning(false);
     setInputModal(true)
   }
 
@@ -161,7 +178,7 @@ function App() {
       {inputModal &&
         <>
           <button className='bg-blur' onClick={() => setInputModal(false)} />
-        <InputModal setInputModal={setInputModal} setInterval={setInterval} interval={interval}/>
+          <InputModal setInputModal={setInputModal} instructions={instructions} interval={interval} reset={reset}/>
         </>
       }
       <div className={'centerer ' + greyOut}>
@@ -179,7 +196,7 @@ function App() {
       <OutputList output={keyedOutput} />
       <div className='output-string'> {outputString} </div>
       <div className='button-container'>
-        <button onClick={step} >Step</button>
+        <button onClick={stepClick} >Step</button>
         <button onClick={run} >Run</button>
         <button onClick={reset} >Reset</button>
         <button onClick={input} >Input</button>

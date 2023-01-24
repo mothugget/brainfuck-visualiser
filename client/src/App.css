@@ -19,6 +19,7 @@
 .InputModal {
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -37,10 +38,33 @@
   font-size: 16px;
 }
 
-form button,.InputModal button {
+form button,
+.InputModal button {
   font-size: 16px;
+  width: 140px;
 }
 
+form {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 2px;
+}
+
+input {
+  height: 20px;
+  width: 200px;
+  margin-right: 4px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+textarea {
+  height: 100px;
+  width: 345px;
+  margin-right: 4px;
+  border-style: solid;
+  border-radius: 4px;
+}
 
 .centerer {
   position: relative;
