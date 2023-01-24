@@ -13,12 +13,11 @@ let loopStart = [];
 let finished = false;
 let greyOut = 'none';
 let outputString = '';
-let interval = 10
-
-const cells = {};
-const output = [];
+let interval = 50
+let cells = {};
+let output = [];
 let instructions
-window.localStorage.instructions = JSON.stringify(('>++++[<++>-]<.').split(''));
+window.localStorage.instructions = JSON.stringify(('++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.').split(''));
 
 
 function App() {
@@ -32,7 +31,7 @@ function App() {
   let insVal = instructions[instructionPos];
 
 
-  function translator(ins) {
+  function interpreter(ins) {
     switch (ins) {
       case '+':
         cells[pointerPos]++;
@@ -64,28 +63,47 @@ function App() {
     }
   }
 
+  function populateCells() {
+    (cells[pointerPos] === undefined) && (cells[pointerPos] = 0);
+  }
+
+  function updateMaxIns() {
+    (instructionPos > maxIns) && (maxIns = instructionPos);
+  }
 
   function step() {
-    (cells[pointerPos] === undefined) && (cells[pointerPos] = 0);
+    populateCells()
     if (!finished) {
-      translator(insVal);
+      interpreter(insVal);
       instructionPos++;
-      (instructionPos > maxIns) && (maxIns = instructionPos);
+      updateMaxIns()
       setProgramState(programState + 1);
     }
   }
 
   function run() {
-    running||console.log('Program running')
+    running || console.log('Program running')
     setRunning(running => !running)
   }
 
   function reload() {
-    window.location.reload();
+    pointerPos = 0;
+    instructionPos = 0;
+    maxIns = 0;
+    loopStart = [];
+    finished = false;
+    greyOut = 'none';
+    outputString = '';
+    interval = 50
+    cells = {};
+    output = [];
+    setProgramState(0);
+    setRunning(false);
+    setInputModal(false);
   }
 
   function input() {
-    running&&run();
+    running && run();
     setInputModal(true)
   }
 
@@ -112,19 +130,19 @@ function App() {
   }
 
   const keyedCells = [];
-  
+
   let maxCell = Math.max.apply(Math, Object.keys(cells));
-  (maxCell===-Infinity)&&(maxCell=0)
+  (maxCell === -Infinity) && (maxCell = 0)
 
   let minCell = Math.min.apply(Math, Object.keys(cells));
   (minCell === Infinity) && (minCell = 0)
 
-  for (let i = minCell; i < maxCell+40; i++) {
+  for (let i = minCell; i < maxCell + 40; i++) {
     keyedCells.push({
       key: i,
       cell: (cells[i] || 0),
       pointer: (i === pointerPos) ? 'cell-pointer' : 'empty-pointer',
-      sign: (i<0)?'negative':'positive'
+      sign: (i < 0) ? 'negative' : 'positive'
     });
   }
 
@@ -140,11 +158,11 @@ function App() {
 
   return (
     <div className="App">
-      {inputModal&&
-      <>
-      <button className='bg-blur' onClick={()=> setInputModal(false)}/>
-      <InputModal/>
-      </>
+      {inputModal &&
+        <>
+          <button className='bg-blur' onClick={() => setInputModal(false)} />
+          <InputModal />
+        </>
       }
       <div className={'centerer ' + greyOut}>
         <div>Instructions</div>
