@@ -24,7 +24,6 @@ export default function SettingsModal(props) {
     function changeInterval(event) {
         event.preventDefault();
         window.localStorage.interval = JSON.stringify(event.target[0].value);
-        props.setSettingsModal(false);
     }
 
     function helloWorld (){
