@@ -44,6 +44,11 @@ form button,
   width: 140px;
 }
 
+.form-button-container {
+  display: flex;
+  flex-direction: column;
+}
+
 form {
   display: flex;
   align-items: center;
@@ -105,7 +110,7 @@ textarea {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  width: 40px;
+  width: var(--instruction-dims);
   height: 20px;
   font-size: 20px;
   border-style: solid;
@@ -116,7 +121,6 @@ textarea {
 }
 
 .instruction-pointer {
-  height: var(--instruction-dims);
   color: red;
 }
 

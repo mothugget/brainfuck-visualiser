@@ -5,6 +5,7 @@ import InstructionList from './components/InstructionList';
 import CellList from './components/CellList';
 import OutputList from './components/OutputList';
 import SettingsModal from './components/SettingsModal';
+import InputModal from './components/InputModal';
 
 let pointerPos = 0;
 let instructionPos = 0;
@@ -26,6 +27,7 @@ function App() {
   const [programState, setProgramState] = useState(0);
   const [running, setRunning] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false)
+  const [inputModal, setInputModal] = useState(false)
 
   if (window.localStorage.instructions) {
     instructions = JSON.parse(window.localStorage.instructions)
@@ -67,6 +69,10 @@ function App() {
         output.push(pointerVal);
         outputString += String.fromCharCode(pointerVal)
         break;
+      case ',':
+        running&&setRunning(false);
+        setInputModal(true);
+        break;
       default:
         console.log('end of program')
         finished = true;
@@ -74,7 +80,7 @@ function App() {
         break;
     }
   }
-
+  
   function populateCells() {
     (cells[pointerPos] === undefined) && (cells[pointerPos] = 0);
   }
@@ -93,10 +99,10 @@ function App() {
     }
   }
 
-function stepClick() {
-  running && setRunning(false);
-  step();
-}
+  function stepClick() {
+    running && setRunning(false);
+    step();
+  }
 
   function run() {
     finished && reset();
@@ -175,10 +181,16 @@ function stepClick() {
 
   return (
     <div className="App">
+      {inputModal &&
+        <>
+          <div className='bg-blur' />
+          <InputModal setInputModal={setInputModal} cells={cells} pointerPos={pointerPos} />
+        </>
+      }
       {settingsModal &&
         <>
           <button className='bg-blur' onClick={() => setSettingsModal(false)} />
-          <SettingsModal setSettingsModal={setSettingsModal} instructions={instructions} interval={interval} reset={reset}/>
+          <SettingsModal setSettingsModal={setSettingsModal} instructions={instructions} interval={interval} reset={reset} />
         </>
       }
       <div className={'centerer ' + greyOut}>

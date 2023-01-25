@@ -3,6 +3,8 @@
 export default function SettingsModal(props) {
     const acceptableChar = ['<', '>', '+', '-', '[', ']', '.']
 
+    let codeValue = ""
+
     function cleanInput(string) {
         const resArr = [];
         string.split('').forEach(char => {
@@ -26,13 +28,14 @@ export default function SettingsModal(props) {
         window.localStorage.interval = JSON.stringify(event.target[0].value);
     }
 
-    function helloWorld (){
+    function helloWorld(event) {
+        event.preventDefault();
         window.localStorage.instructions = JSON.stringify('++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.');
-        props.reset()
         props.setSettingsModal(false);
     }
- 
-    function hCode (){
+
+    function hCode(event) {
+        event.preventDefault();
         window.localStorage.instructions = JSON.stringify('>+++++++++[<++++++++>-]<.');
         props.setSettingsModal(false);
     }
@@ -41,15 +44,17 @@ export default function SettingsModal(props) {
         <div className='SettingsModal modal'>
             Current code: {props.instructions}
             <form onSubmit={saveCode}>
-                <textarea type='text' name='code' placeholder="Your code goes here " />
-                <button type='submit'>Save</button>
+                <textarea type='text' value={codeValue} name='code' placeholder="Your code goes here " />
+                <div className="form-button-container">
+                    <button type='submit'>Save</button>
+                    <button onClick={helloWorld}>Hello world!</button>
+                    <button onClick={hCode}>H</button>
+                </div>
             </form>
             <form onSubmit={changeInterval}>
                 <input type='number' min='1' name='code' placeholder={'Current interval: ' + props.interval} />
                 <button type='submit'>Set interval</button>
             </form>
-            <button onClick={helloWorld}>Hello world!</button>
-            <button onClick={hCode}>H</button>
         </div>
     )
 }
