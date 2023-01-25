@@ -16,7 +16,7 @@
   backdrop-filter: blur(7px);
 }
 
-.InputModal {
+.modal {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -39,7 +39,7 @@
 }
 
 form button,
-.InputModal button {
+.modal button {
   font-size: 16px;
   width: 140px;
 }

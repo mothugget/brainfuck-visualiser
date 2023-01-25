@@ -4,7 +4,7 @@ import './App.css';
 import InstructionList from './components/InstructionList';
 import CellList from './components/CellList';
 import OutputList from './components/OutputList';
-import InputModal from './components/InputModal';
+import SettingsModal from './components/SettingsModal';
 
 let pointerPos = 0;
 let instructionPos = 0;
@@ -25,12 +25,12 @@ let interval;
 function App() {
   const [programState, setProgramState] = useState(0);
   const [running, setRunning] = useState(false);
-  const [inputModal, setInputModal] = useState(false)
+  const [settingsModal, setSettingsModal] = useState(false)
 
   if (window.localStorage.instructions) {
     instructions = JSON.parse(window.localStorage.instructions)
   } else {
-    instructions = ('>++[<+++>-]<.').split('')
+    instructions = ('>++++++++[<+++++++++>-]<.').split('')
   }
 
   if (window.localStorage.interval) {
@@ -116,12 +116,12 @@ function stepClick() {
     output = [];
     setProgramState(0);
     setRunning(false);
-    setInputModal(false);
+    setSettingsModal(false);
   }
 
   function input() {
     running && setRunning(false);
-    setInputModal(true)
+    setSettingsModal(true)
   }
 
 
@@ -175,10 +175,10 @@ function stepClick() {
 
   return (
     <div className="App">
-      {inputModal &&
+      {settingsModal &&
         <>
-          <button className='bg-blur' onClick={() => setInputModal(false)} />
-          <InputModal setInputModal={setInputModal} instructions={instructions} interval={interval} reset={reset}/>
+          <button className='bg-blur' onClick={() => setSettingsModal(false)} />
+          <SettingsModal setSettingsModal={setSettingsModal} instructions={instructions} interval={interval} reset={reset}/>
         </>
       }
       <div className={'centerer ' + greyOut}>
