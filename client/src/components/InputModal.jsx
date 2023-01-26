@@ -10,10 +10,10 @@ export default function InputModal(props) {
 
 
     return (
-        <div className='InputModal'>
+        <div className='InputModal modal'>
             <form onSubmit={inputByte}>
                 <input type='number' min='1' name='inputByte' placeholder={'Number for input'} />
-                <button type='submit'>Set interval</button>
+                <button type='submit'>Input value</button>
             </form>
         </div>
     )

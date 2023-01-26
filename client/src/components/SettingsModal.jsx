@@ -1,9 +1,7 @@
 
 
 export default function SettingsModal(props) {
-    const acceptableChar = ['<', '>', '+', '-', '[', ']', '.']
-
-    let codeValue = ""
+    const acceptableChar = ['<', '>', '+', '-', '[', ']', '.', ',']
 
     function cleanInput(string) {
         const resArr = [];
@@ -44,7 +42,7 @@ export default function SettingsModal(props) {
         <div className='SettingsModal modal'>
             Current code: {props.instructions}
             <form onSubmit={saveCode}>
-                <textarea type='text' value={codeValue} name='code' placeholder="Your code goes here " />
+                <textarea type='text' name='code' placeholder="Your code goes here " />
                 <div className="form-button-container">
                     <button type='submit'>Save</button>
                     <button onClick={helloWorld}>Hello world!</button>
