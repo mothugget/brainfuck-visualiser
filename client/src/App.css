@@ -48,6 +48,14 @@ form button,
   width: 140px;
 }
 
+label{
+  margin-right:5px;
+}
+
+.interval-spacer{
+  width: 140px;
+}
+
 .form-button-container {
   display: flex;
   flex-direction: column;

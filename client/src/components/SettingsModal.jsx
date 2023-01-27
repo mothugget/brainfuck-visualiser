@@ -1,6 +1,8 @@
-
+import { useState } from "react";
 
 export default function SettingsModal(props) {
+    const [onChangeInterval, setOnChangeInterval] = useState(props.interval)
+
     const acceptableChar = ['<', '>', '+', '-', '[', ']', '.', ',']
 
     function cleanInput(string) {
@@ -23,18 +25,22 @@ export default function SettingsModal(props) {
 
     function changeInterval(event) {
         event.preventDefault();
-        window.localStorage.interval = JSON.stringify(event.target[0].value);
+        setOnChangeInterval(event.target.value)
+        if (event.target.value != undefined)
+            window.localStorage.interval = JSON.stringify(event.target.value);
     }
 
     function helloWorld(event) {
         event.preventDefault();
         window.localStorage.instructions = JSON.stringify('++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.');
+        props.reset();
         props.setSettingsModal(false);
     }
 
     function hCode(event) {
         event.preventDefault();
         window.localStorage.instructions = JSON.stringify('>+++++++++[<++++++++>-]<.');
+        props.reset();
         props.setSettingsModal(false);
     }
 
@@ -50,8 +56,9 @@ export default function SettingsModal(props) {
                 </div>
             </form>
             <form onSubmit={changeInterval}>
-                <input type='number' min='1' name='code' placeholder={'Current interval: ' + props.interval} />
-                <button type='submit'>Set interval</button>
+                <label>Interval</label>
+                <input value={onChangeInterval} type='number' min='1' name='code' onChange={changeInterval} placeholder={'Current interval: ' + props.interval} />
+<div className="interval-spacer"></div>
             </form>
         </div>
     )

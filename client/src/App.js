@@ -48,10 +48,10 @@ function App() {
   function interpreter(ins) {
     switch (ins) {
       case '+':
-        cells[pointerPos]++;
+        (pointerVal === 255) ? (cells[pointerPos] = 0) : cells[pointerPos]++;
         break;
       case '-':
-        cells[pointerPos]--;
+        (pointerVal === 0) ? (cells[pointerPos] = 255) : cells[pointerPos]--;
         break;
       case '>':
         pointerPos++;
@@ -70,7 +70,7 @@ function App() {
         outputString += String.fromCharCode(pointerVal)
         break;
       case ',':
-        running&&setRunning(false);
+        running && setRunning(false);
         setInputModal(true);
         break;
       default:
@@ -80,7 +80,7 @@ function App() {
         break;
     }
   }
-  
+
   function populateCells() {
     (cells[pointerPos] === undefined) && (cells[pointerPos] = 0);
   }
@@ -190,7 +190,12 @@ function App() {
       {settingsModal &&
         <>
           <button className='bg-blur' onClick={() => setSettingsModal(false)} />
-          <SettingsModal setSettingsModal={setSettingsModal} instructions={instructions} interval={interval} reset={reset} />
+          <SettingsModal
+            setSettingsModal={setSettingsModal}
+            instructions={instructions}
+            interval={interval}
+            reset={reset}
+          />
         </>
       }
       <div className={'centerer ' + greyOut}>
@@ -209,7 +214,7 @@ function App() {
       <div className='output-string'> {outputString} </div>
       <div className='button-container'>
         <button onClick={stepClick} >Step</button>
-        <button onClick={run} >Run</button>
+        <button onClick={run} >{running ? 'Stop' : 'Run'}</button>
         <button onClick={reset} >Reset</button>
         <button onClick={input} >Settings</button>
       </div>
