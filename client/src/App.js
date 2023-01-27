@@ -211,7 +211,7 @@ function App() {
         <button onClick={stepClick} >Step</button>
         <button onClick={run} >Run</button>
         <button onClick={reset} >Reset</button>
-        <button onClick={input} >Input</button>
+        <button onClick={input} >Settings</button>
       </div>
     </div>
   );
