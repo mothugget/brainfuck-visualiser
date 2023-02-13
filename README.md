@@ -1,5 +1,7 @@
 # Brainfuck Visualiser
-A small react app to help visualise how to print unicode characters in the esolang brainfuck.
+A small react app to help visualise how to print unicode characters in the esolang brainfuck.'
+
+[Try it out here!](https://mothugget.github.io/brainfuck-visualiser/)
 
 ## Further reading
 
